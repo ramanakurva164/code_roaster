@@ -91,8 +91,8 @@ def roast_code_with_huggingface(code, style="🧑‍🏫 Friendly"):
         # Generate roast using chat completion
         response = client.chat_completion(
             messages=messages,
-            model="microsoft/DialoGPT-medium",  # You can change this to other models
-            max_tokens=1000,
+            model="mistralai/Mistral-7B-Instruct-v0.2",
+            max_tokens=500,
             temperature=0.8
         )
         
