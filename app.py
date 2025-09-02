@@ -71,7 +71,7 @@ def roast_code_with_huggingface(code, style="🧑‍🏫 Friendly"):
     """
     try:
         # Get API token from environment
-        hf_token = st.secrets["HUGGINGFACE_API_TOKEN"]
+        hf_token = os.getenv("HUGGINGFACE_API_TOKEN")
         if not hf_token:
             return "❌ Error: Hugging Face API token not found. Please check your environment variables."
         
