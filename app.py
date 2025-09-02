@@ -66,40 +66,34 @@ def get_user_prompt(code):
 Be specific about issues you find and make it entertaining!"""
 
 def roast_code_with_huggingface(code, style="🧑‍🏫 Friendly"):
-    """
-    Roast code using Hugging Face API
-    """
     try:
-        # Get API token from environment
         hf_token = os.getenv("HUGGINGFACE_API_TOKEN")
         if not hf_token:
             return "❌ Error: Hugging Face API token not found. Please check your environment variables."
         
-        # Initialize the client
         client = InferenceClient(token=hf_token)
-        
-        # Get system and user prompts
+
         system_prompt = get_system_prompt(style)
         user_prompt = get_user_prompt(code)
-        
-        # Create messages
+
         messages = [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt}
         ]
-        
-        # Generate roast using chat completion
+
+        # Use a chat-compatible model
         response = client.chat_completion(
-            messages=messages,
             model="mistralai/Mistral-7B-Instruct-v0.2",
+            messages=messages,
             max_tokens=500,
             temperature=0.8
         )
-        
-        return response.choices[0].message.content
-        
+
+        return response.choices[0].message["content"]
+
     except Exception as e:
         return f"❌ Error roasting your code: {str(e)}"
+
 
 def main():
     # Header
